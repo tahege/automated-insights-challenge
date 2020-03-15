@@ -1,4 +1,6 @@
 # The Challenge
+> Since this challenge seemed to target the front-end skills, I decided to use the `Create React App` utility to bootstrap a React environment and am using `Bulma` for styling. 
+
 ## Hi - Lo
 ### The Rules
 Play consists of a dealer and a player.
@@ -40,9 +42,7 @@ The UI should contain:
 
 You can assume that we will be using the Chrome browser to play your game, so there is no need to worry about browser compatibility.
 
-> This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
+## Create React App Scripts
 
 In the project directory, you can run:
 
