@@ -15,21 +15,25 @@ import {
 
 import { cardValueToInteger } from '../utils';
 
+import {
+    DEALER,
+    HI,
+    LO,
+    PLAYER_1,
+    PLAYER_2
+} from '../constants';
+
 import Card from '../components/Card';
 import SlimPanel from '../components/SlimPanel';
-
-const DEALER = "dealer";
-const HI = "HI";
-const LO = "LO";
 
 const mapStateToProps = (state, props) => {
     let player, dealer;
     if (state.players.player1.role === DEALER) {
-        dealer = "player1";
-        player = "player2";
+        dealer = PLAYER_1;
+        player = PLAYER_2;
     } else {
-        dealer = "player2";
-        player = "player1";
+        dealer = PLAYER_2;
+        player = PLAYER_1;
     }
     return {
         cards: state.cards || {},
@@ -66,13 +70,15 @@ const PlayArea = ({
     player,
     onDealCard,
     onScoreCards,
-    onPass
+    onPass,
+    neededToPass = 3
 }) => {
     const [guess, setGuess] = useState(null);
     const [streak, setStreak] = useState(0);
     const [prevMatchup, setPrevMatchup] = useState(null);
     const revealedCards = cards.dealt.length;
     const topCard = revealedCards ? cards.dealt[revealedCards - 1] : null;
+    const streakNeeded = Math.max(neededToPass - streak, 0);
 
     useEffect(() => {
         if (cards.remaining === 52) {
@@ -133,7 +139,7 @@ const PlayArea = ({
                     title={`Player (${players[player].name})`}
                 >
                     <button
-                        className={"button" + (player === "player1" ? " is-link" : " is-primary") + (guess === HI ? "" : " is-outlined")}
+                        className={"button" + (player === PLAYER_1 ? " is-link" : " is-primary") + (guess === HI ? "" : " is-outlined")}
                         disabled={!Boolean(revealedCards)}
                         onClick={e => {
                             e.preventDefault();
@@ -146,7 +152,7 @@ const PlayArea = ({
                     </button>
                     <div>Current Card: {topCard && topCard.value}</div>
                     <button
-                        className={"button" + (player === "player1" ? " is-link" : " is-primary") + (guess === LO ? "" : " is-outlined")}
+                        className={"button" + (player === PLAYER_1 ? " is-link" : " is-primary") + (guess === LO ? "" : " is-outlined")}
                         disabled={!Boolean(revealedCards)}
                         onClick={e => {
                             e.preventDefault();
@@ -157,7 +163,7 @@ const PlayArea = ({
                         <span className="icon"><FontAwesomeIcon icon={faLessThanEqual} /></span>
                         <span>Lo</span>
                     </button>
-                    <div>Guesses Left: {Math.max(3 - streak, 0)}</div>
+                    <div>Guesses Left: {streakNeeded}</div>
                     <button
                         className="button is-outlined"
                         onClick={e => {
@@ -166,7 +172,7 @@ const PlayArea = ({
                             setGuess(null);
                             setStreak(0);
                         }}
-                        disabled={Boolean(Math.max(3 - streak, 0))}
+                        disabled={Boolean(streakNeeded)}
                     >Pass</button>
                 </SlimPanel>
                 <SlimPanel

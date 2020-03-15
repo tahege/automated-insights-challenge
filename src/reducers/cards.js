@@ -1,7 +1,7 @@
 import {
+    SET_DECK,
     SCORE_CARDS,
     DEAL_CARD,
-    SET_DECK,
     RESET_GAME
 } from '../actions/types';
 

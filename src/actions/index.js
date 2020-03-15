@@ -15,10 +15,10 @@ export const setDeck = (id, remaining) => {
     }
 }
 
-export const setPlayerName = (id, name) => {
+export const setPlayerName = (key, name) => {
     return {
         type: SET_PLAYER_NAME,
-        id,
+        key,
         name
     }
 }

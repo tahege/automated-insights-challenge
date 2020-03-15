@@ -5,8 +5,10 @@ import {
     RESET_GAME
 } from '../actions/types';
 
-const PLAYER = 'player';
-const DEALER = 'dealer';
+import {
+    DEALER,
+    PLAYER
+} from '../constants';
 
 const initialState = {
     player1: {
@@ -28,7 +30,7 @@ const players = (state = initialState, action) => {
     };
     switch (action.type) {
         case SET_PLAYER_NAME:
-            let updatePlayer = updatedState[action.id];
+            let updatePlayer = updatedState[action.key];
             updatePlayer.name = action.name;
             return updatedState;
         case SWITCH_PLAYER_ROLES:

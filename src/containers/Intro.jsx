@@ -7,6 +7,11 @@ import {
 
 import Modal from '../components/Modal';
 
+import {
+    PLAYER_1,
+    PLAYER_2
+} from '../constants';
+
 const mapStateToProps = (state, props) => {
     return {
         cards: state.cards || {}
@@ -21,12 +26,11 @@ const mapDispatchToProps = (dispatch, props) => {
     };
 };
 
-
 const Intro = ({
     cards,
     onSetPlayerName
 }) => {
-    const [names, setNames] = useState(['Thomas', 'Andrea']);
+    const [names, setNames] = useState(['', '']);
     const [active, setActive] = useState(true);
     useEffect(() => {
         if (cards.remaining === 52 && !active) {
@@ -43,8 +47,8 @@ const Intro = ({
                     tabIndex="3"
                     onClick={e => {
                         e.preventDefault();
-                        onSetPlayerName('player1', names[0] || "Player 1");
-                        onSetPlayerName('player2', names[1] || "Player 2");
+                        onSetPlayerName(PLAYER_1, names[0] || "Player 1");
+                        onSetPlayerName(PLAYER_2, names[1] || "Player 2");
                         setActive(false);
                     }}
                 >Start Playing!</button>

@@ -7,6 +7,11 @@ import {
 
 import Modal from '../components/Modal';
 
+import {
+    PLAYER_1,
+    PLAYER_2
+} from '../constants';
+
 const mapStateToProps = (state, props) => {
     return {
         player1: state.players.player1,
@@ -37,10 +42,10 @@ const GameOver = ({
     let winner = null;
     let winnerTitle = "Tie!";
     if (player1.score < player2.score) {
-        winner = "player1";
+        winner = PLAYER_1;
         winnerTitle = `${player1.name} Wins!`;
     } else if (player2.score < player1.score) {
-        winner = "player2";
+        winner = PLAYER_2;
         winnerTitle = `${player2.name} Wins!`;
     }
     useEffect(() => {
@@ -65,12 +70,12 @@ const GameOver = ({
             )}
         >
             <div className="game-over content">
-                <div className={"columns player1" + (winner === "player1" ? " winner" : "")}>
+                <div className={"columns player1" + (winner === PLAYER_1 ? " winner" : "")}>
                     <div className="win column">Winner!</div>
                     <div className="column">{player1.name}</div>
                     <div className="column">{player1.score}</div>
                 </div>
-                <div className={"columns player2" + (winner === "player2" ? " winner" : "")}>
+                <div className={"columns player2" + (winner === PLAYER_2 ? " winner" : "")}>
                     <div className="win column">Winner!</div>
                     <div className="column">{player2.name}</div>
                     <div className="column">{player2.score}</div>
