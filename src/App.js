@@ -1,26 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+import { setDeck } from './actions';
+import appReducers from './reducers';
+
+import 'bulma/css/bulma.css';
+import './App.scss';
+
+import Intro from './containers/Intro';
+import GameOver from './containers/GameOver';
+import PlayArea from './containers/PlayArea';
+import Scoreboard from './containers/Scoreboard';
+
+const store = createStore(appReducers);
+
+fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
+  .then(res => res.json())
+  .then(data => {
+    store.dispatch(setDeck(data.deck_id, data.remaining));
+  });
+
+
+
+const App = () => (
+  <Provider store={store}>
+    <div className="app">
+      <section>
+        <PlayArea />
+        <Scoreboard />
+      </section>
+      <Intro />
+      <GameOver />
     </div>
-  );
-}
+  </Provider>
+);
 
 export default App;
